@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuqy.kafka.mapper.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.xuqy.kafka.entity.Log" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="MSG" property="msg" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from LOG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.xuqy.kafka.entity.Log" >
+    insert into LOG (ID, STATUS,
+      MSG)
+    values (seq_id.nextval,#{status,jdbcType=VARCHAR},
+      #{msg,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xuqy.kafka.entity.Log" >
+    update LOG
+    set CREATE_TIME = #{createTime,jdbcType=OTHER},
+      STATUS = #{status,jdbcType=VARCHAR},
+      MSG = #{msg,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select ID, CREATE_TIME, STATUS, MSG
+    from LOG
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, CREATE_TIME, STATUS, MSG
+    from LOG
+  </select>
+</mapper>
